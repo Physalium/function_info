@@ -16,21 +16,43 @@ namespace Function_Info_Test
                 string workingDirectory = Directory.GetParent(Environment.CurrentDirectory).FullName;
                 string projectDirectory = Directory.GetParent(workingDirectory).Parent.FullName;
                 var outputDir = Path.GetFullPath(Path.Combine(projectDirectory, @"..\Function_Info\Model\"));
+                var testPath = outputDir + @"Test.txt";
                 fi.PythonFileCaller.CreateGraph("test", "0", "0");
 
                 string text;
                 try
                 {
-                    text = File.ReadAllText(outputDir + @"Test.txt");
+                    text = File.ReadAllText(testPath);
 
                 }
                 catch (System.Exception)
                 {
                     System.Console.WriteLine(outputDir);
-                    text=string.Empty;
+                    text = string.Empty;
                 }
-                var expected="test";
-                Assert.Equal(expected,text);
+                finally
+                {
+                    File.Delete(testPath);
+                }
+                var expected = "test";
+                Assert.Equal(expected, text);
+
+            }
+
+            [Fact]
+            public void createGraphTest()
+            {
+                string workingDirectory = Directory.GetParent(Environment.CurrentDirectory).FullName;
+                string projectDirectory = Directory.GetParent(workingDirectory).Parent.FullName;
+                var outputDir = Path.GetFullPath(Path.Combine(projectDirectory, @"..\Function_Info\Model\"));
+
+                var formula = "x*2+2";
+                var lBound = "-3";
+                var rBound = "3";
+                var graphFile = Path.Combine(outputDir, "graph.png");
+                fi.PythonFileCaller.CreateGraph(formula, lBound, rBound);
+                Assert.True(File.Exists(graphFile));
+
             }
         }
     }

@@ -12,8 +12,10 @@ def graph(formula:str, leftBound,rightBound):
     
     x = np.array(range(int(leftBound),int(rightBound)+1))  
     y = ne.evaluate(formula)
-    plt.plot(x, y)  
-    plt.show()
+    plt.plot(x, y)
+    plt.xlabel(x)
+    plt.ylabel(formula)
+    plt.savefig('graph.png')
 
 if __name__ == "__main__":
     if(len(sys.argv)==4):
