@@ -3,18 +3,28 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:resx="clr-namespace:Function_Info.Properties"
         xmlns:local="clr-namespace:Function_Info"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="1*"/>
-            <RowDefinition Height="2*"/>
-            <RowDefinition Height="80*"/>
+        Title="MainWindow" Height="900" Width="800">
+    <StackPanel>
+        <StackPanel Orientation="Horizontal" Height="50" Background="DeepSkyBlue">
+            <Label Content="{x:Static resx:Resources.EquationLabel}" VerticalAlignment="Center" />
+            <TextBox  Margin="10" Width="200" FontSize="15" VerticalContentAlignment="Center" 
+                      Background="AliceBlue" Text="{Binding Equation}" />
+            <Label Content="{x:Static resx:Resources.LeftBoundLabel}" VerticalAlignment="Center" />
+            <TextBox  Margin="10" Width="50" FontSize="15" VerticalContentAlignment="Center" 
+                      Background="AliceBlue" Text="{Binding LeftBound}" />
+            <Label Content="{x:Static resx:Resources.RightBoundLabel}" VerticalAlignment="Center"/>
+            <TextBox  Margin="10" Width="50" FontSize="15" VerticalContentAlignment="Center"
+                      Background="AliceBlue" Text="{Binding RightBound}" />
             
-        </Grid.RowDefinitions>
-        <Button Content="OK"/>
-        <TextBox Grid.Row="1" Margin="10"/>
-        <Image/>
-    </Grid>
+            <Button Content="{x:Static resx:Resources.AnalyzeButtonText}"
+                    Margin="30,10,10,10" Height="150" Width="100" />
+        </StackPanel>
+
+        <StackPanel>
+            <Image Source="{Binding Graph}" Height="680" Width="480"/>
+        </StackPanel>
+    </StackPanel>
 </Window>

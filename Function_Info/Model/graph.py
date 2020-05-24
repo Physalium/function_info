@@ -13,8 +13,8 @@ def graph(formula:str, leftBound,rightBound):
     x = np.array(range(int(leftBound),int(rightBound)+1))  
     y = ne.evaluate(formula)
     plt.plot(x, y)
-    plt.xlabel(x)
-    plt.ylabel(formula)
+    plt.xlabel("x")
+    plt.ylabel("f(x)")
     plt.savefig('graph.png')
 
 if __name__ == "__main__":
