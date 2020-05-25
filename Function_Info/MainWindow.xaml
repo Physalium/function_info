@@ -6,25 +6,26 @@
         xmlns:resx="clr-namespace:Function_Info.Properties"
         xmlns:local="clr-namespace:Function_Info"
         mc:Ignorable="d"
-        Title="MainWindow" Height="900" Width="800">
+        Title="Function Info App" Height="900" Width="800">
     <StackPanel>
         <StackPanel Orientation="Horizontal" Height="50" Background="DeepSkyBlue">
             <Label Content="{x:Static resx:Resources.EquationLabel}" VerticalAlignment="Center" />
-            <TextBox  Margin="10" Width="200" FontSize="15" VerticalContentAlignment="Center" 
+            <TextBox  Margin="10" Width="200" FontSize="15" VerticalContentAlignment="Center"
                       Background="AliceBlue" Text="{Binding Equation}" />
             <Label Content="{x:Static resx:Resources.LeftBoundLabel}" VerticalAlignment="Center" />
-            <TextBox  Margin="10" Width="50" FontSize="15" VerticalContentAlignment="Center" 
+            <TextBox  Margin="10" Width="50" FontSize="15" VerticalContentAlignment="Center"
                       Background="AliceBlue" Text="{Binding LeftBound}" />
-            <Label Content="{x:Static resx:Resources.RightBoundLabel}" VerticalAlignment="Center"/>
+            <Label Content="{x:Static resx:Resources.RightBoundLabel}" VerticalAlignment="Center" />
             <TextBox  Margin="10" Width="50" FontSize="15" VerticalContentAlignment="Center"
                       Background="AliceBlue" Text="{Binding RightBound}" />
-            
-            <Button Content="{x:Static resx:Resources.AnalyzeButtonText}"
-                    Margin="30,10,10,10" Height="150" Width="100" />
+
+            <Button Visibility="Visible" Content="{x:Static resx:Resources.AnalyzeButtonText}" Foreground="Black"
+                    Background="AliceBlue"  FontSize="16" Command="{Binding Analyze}" Margin="30,10,10,10"
+                    Height="50" Width="100" VerticalContentAlignment="Top" />
         </StackPanel>
 
         <StackPanel>
-            <Image Source="{Binding Graph}" Height="680" Width="480"/>
+            <Image Source="{Binding Graph}" Height="680" Width="480" />
         </StackPanel>
     </StackPanel>
 </Window>

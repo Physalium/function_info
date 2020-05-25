@@ -1,16 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
-using System.Windows;
-using System.Windows.Media;
+using System.Linq;
 using System.Windows.Media.Imaging;
+
+using Function_Info.Model;
 using Function_Info.ViewModel.Base;
 
 namespace Function_Info.ViewModel
 {
-    class MainViewModel : BaseViewModel
+    internal class MainViewModel : BaseViewModel
     {
+        #region Model
+
+        private PythonFileCaller pythonFileCaller = new PythonFileCaller();
+
+        #endregion Model
+
         #region Properties
 
         private string equation = "x**2";
@@ -24,6 +29,7 @@ namespace Function_Info.ViewModel
                 onPropertyChanged(nameof(Equation));
             }
         }
+
         private string leftBound = "-10";
 
         public string LeftBound
@@ -36,7 +42,7 @@ namespace Function_Info.ViewModel
             }
         }
 
-        string rightBound = "10";
+        private string rightBound = "10";
 
         public string RightBound
         {
@@ -48,17 +54,30 @@ namespace Function_Info.ViewModel
             }
         }
 
-
         private RelayCommand analyze;
 
         public RelayCommand Analyze
         {
-            get { return analyze; }
-            set
+            get
             {
-                analyze = value;
-                onPropertyChanged(nameof(Analyze));
+                if (analyze == null)
+                {
+                    analyze = new RelayCommand(
+                        execute =>
+                        {
+                            pythonFileCaller.CreateGraph(Equation, LeftBound, RightBound);
+                            updateGraph();
+                        },
+                        canExecute =>
+                        {
+                            string[] inputs = { Equation, LeftBound, RightBound };
+                            if (inputs.Any(field => string.IsNullOrEmpty(field))) return false;
+                            return true;
+                        });
+                }
+                return analyze;
             }
+            set => analyze = value;
         }
 
         private BitmapImage graph;
@@ -73,9 +92,30 @@ namespace Function_Info.ViewModel
             }
         }
 
+        #region Internal methods
 
+        private void updateGraph()
+        {
+            string projectDirectory = Directory.GetParent(Environment.CurrentDirectory).FullName;
+            var outputDir = Path.GetFullPath(Path.Combine(projectDirectory, @"..\..\Model\"));
+            var graphFile = Path.Combine(outputDir, "graph.png");
+            var bitmap = new BitmapImage();
 
-        #endregion
+            using (var stream = new MemoryStream(File.ReadAllBytes(graphFile)))
+            {
+                bitmap.BeginInit();
+                bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                bitmap.StreamSource = stream;
+                bitmap.EndInit();
+            }
+            bitmap.Freeze(); // optionally make it cross-thread accessible
+            Graph = bitmap;
+        }
+
+        #endregion Internal methods
+
+        #endregion Properties
+
         public MainViewModel()
         {
             var bitmap = new BitmapImage();
@@ -88,7 +128,7 @@ namespace Function_Info.ViewModel
                 bitmap.EndInit();
             }
             bitmap.Freeze(); // optionally make it cross-thread accessible
-            graph=bitmap;
+            graph = bitmap;
         }
     }
 }

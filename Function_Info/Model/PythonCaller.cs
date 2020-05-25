@@ -1,25 +1,19 @@
-﻿using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 
 namespace Function_Info.Model
 {
-    public static class PythonFileCaller
+    public class PythonFileCaller
     {
-        public static void CreateGraph(string functionFormula, string leftBound, string rightBound)
+        public void CreateGraph(string functionFormula, string leftBound, string rightBound)
         {
-            Process process = new System.Diagnostics.Process();
-            ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
-            startInfo.WindowStyle=ProcessWindowStyle.Normal;
-            //startInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
-            startInfo.FileName = "cmd.exe";
-            startInfo.Arguments = @"/C cd C:\Users\Karol\Desktop\Projekty\Function_Info\Function_Info\Model\& python graph.py "
-            +$"{functionFormula} {leftBound} {rightBound}";
-            startInfo.Verb = "runas";
-            process.StartInfo = startInfo;
-            process.Start();
-
-            process.WaitForExit();
+            Process cmd = new Process();
+            cmd.StartInfo.FileName = "cmd.exe";
+            cmd.StartInfo.Arguments = @"/C cd C:\Users\Karol\Desktop\Projekty\Function_Info\Function_Info\Model\& python graph.py "
+            + $"{functionFormula} {leftBound} {rightBound}";
+            cmd.StartInfo.Verb = "runas";
+            cmd.StartInfo.CreateNoWindow = true;
+            cmd.Start();
+            cmd.WaitForExit();
         }
-
     }
 }
