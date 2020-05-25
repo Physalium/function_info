@@ -1,15 +1,18 @@
 using System;
 using System.IO;
-using System.Reflection;
+
+using Function_Info.Model;
+
 using Xunit;
 
 namespace Function_Info_Test
 {
-    using fi = Function_Info.Model;
     public class Test
     {
         public class PythonCallerTest
         {
+            private PythonFileCaller model = new PythonFileCaller();
+
             [Fact]
             public void CallPythonTest()
             {
@@ -17,13 +20,12 @@ namespace Function_Info_Test
                 string projectDirectory = Directory.GetParent(workingDirectory).Parent.FullName;
                 var outputDir = Path.GetFullPath(Path.Combine(projectDirectory, @"..\Function_Info\Model\"));
                 var testPath = outputDir + @"Test.txt";
-                fi.PythonFileCaller.CreateGraph("test", "0", "0");
+                model.CreateGraph("test", "0", "0");
 
                 string text;
                 try
                 {
                     text = File.ReadAllText(testPath);
-
                 }
                 catch (System.Exception)
                 {
@@ -36,7 +38,6 @@ namespace Function_Info_Test
                 }
                 var expected = "test";
                 Assert.Equal(expected, text);
-
             }
 
             [Fact]
@@ -46,15 +47,13 @@ namespace Function_Info_Test
                 string projectDirectory = Directory.GetParent(workingDirectory).Parent.FullName;
                 var outputDir = Path.GetFullPath(Path.Combine(projectDirectory, @"..\Function_Info\Model\"));
 
-                var formula = "x*2+2";
-                var lBound = "-3";
-                var rBound = "3";
+                var formula = "x**2";
+                var lBound = "-10";
+                var rBound = "10";
                 var graphFile = Path.Combine(outputDir, "graph.png");
-                fi.PythonFileCaller.CreateGraph(formula, lBound, rBound);
+                model.CreateGraph(formula, lBound, rBound);
                 Assert.True(File.Exists(graphFile));
-
             }
         }
     }
-
 }
