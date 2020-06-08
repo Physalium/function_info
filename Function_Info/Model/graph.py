@@ -5,12 +5,12 @@ import sys
 import os
 currentDir = os.path.dirname(os.path.realpath(__file__))
 def graph(formula:str, leftBound,rightBound):
-    if formula=="test":  
-        test_file=open(currentDir+"\Test.txt",mode='w+')
-        test_file.write("test")
-        return
-    
-    x = np.array(range(int(leftBound),int(rightBound)+1))  
+    if formula=="test":
+       test_file=open(currentDir+"\Test.txt",mode='w+')
+       test_file.write("test")
+       return
+
+    x = np.array(range(int(leftBound),int(rightBound)+1))
     y = ne.evaluate(formula)
     plt.plot(x, y)
     plt.xlabel("x")

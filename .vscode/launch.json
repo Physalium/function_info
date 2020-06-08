@@ -5,12 +5,21 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Python: Current File",
-            "type": "python",
+            "name": ".NET Core Launch (console)",
+            "type": "coreclr",
             "request": "launch",
-            "program": "${file}",
-            "console": "integratedTerminal",
-            "args": ["test","0","0"]
+            "preLaunchTask": "build",
+            "program": "${workspaceFolder}/Function_Info/bin/Debug/netcoreapp3.1/Function_Info.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/Function_Info",
+            "console": "internalConsole",
+            "stopAtEntry": false
+        },
+        {
+            "name": ".NET Core Attach",
+            "type": "coreclr",
+            "request": "attach",
+            "processId": "${command:pickProcess}"
         }
     ]
 }

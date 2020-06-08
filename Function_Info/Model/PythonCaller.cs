@@ -13,7 +13,10 @@ namespace Function_Info.Model
             cmd.StartInfo.Verb = "runas";
             cmd.StartInfo.CreateNoWindow = true;
             cmd.Start();
-            cmd.WaitForExit();
+            while (!cmd.HasExited)
+            {
+                
+            }
         }
     }
 }

@@ -96,8 +96,8 @@ namespace Function_Info.ViewModel
 
         private void updateGraph()
         {
-            string projectDirectory = Directory.GetParent(Environment.CurrentDirectory).FullName;
-            var outputDir = Path.GetFullPath(Path.Combine(projectDirectory, @"..\..\Model\"));
+            string projectDirectory = Environment.CurrentDirectory;
+            var outputDir = Path.Combine(projectDirectory, @"Model");
             var graphFile = Path.Combine(outputDir, "graph.png");
             var bitmap = new BitmapImage();
 
